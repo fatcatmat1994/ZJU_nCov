@@ -90,8 +90,8 @@ class HitCarder(object):
         with open("form.txt", "r", encoding="utf-8") as f:
             if new_form == f.read():
                 return True
-        with open("form.txt", "w", encoding="utf-8") as f:
-            f.write(new_form)
+        # with open("form.txt", "w", encoding="utf-8") as f:
+        #    f.write(new_form)
         return False
 
     def get_info(self, html=None):
@@ -135,6 +135,7 @@ class HitCarder(object):
         new_info['sfzx'] = old_info['sfzx'] # 在校
         new_info['sfymqjczrj'] = old_info['sfymqjczrj'] # 入境
         new_info['sfqrxxss'] = 1 # 属实
+        new_info['campus'] = old_info['campus']
 
         self.info = new_info
         # print(json.dumps(self.info))
