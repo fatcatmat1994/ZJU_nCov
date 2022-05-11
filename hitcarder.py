@@ -37,8 +37,6 @@ class HitCarder(object):
         adapter = HTTPAdapter(max_retries=retry)
         self.sess.mount('http://', adapter)
         self.sess.mount('https://', adapter)
-        # ua = UserAgent()
-        # self.sess.headers['User-Agent'] = ua.chrome
         self.sess.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'}
 
@@ -65,7 +63,7 @@ class HitCarder(object):
 
         # check if login successfully
         if '统一身份认证' in res.content.decode():
-            raise LoginError('登录失败，请核实账号密码重新登录')
+            raise LoginError('❌❌❌ 登录失败，请核实账号密码重新登录 ❌❌❌')
         return self.sess
 
     def post(self):
@@ -83,7 +81,7 @@ class HitCarder(object):
         """Get CAPTCHA code"""
         resp = self.sess.get(self.CAPTCHA_URL)
         captcha = self.ocr.classification(resp.content)
-        print("验证码：", captcha)
+        print("🚌🚌🚌 验证码获取成功, 本次验证码为 【%s】 🚌🚌🚌" % captcha)
         return captcha
     
     def check_form(self):
@@ -94,17 +92,10 @@ class HitCarder(object):
         try:
             new_form = re.findall(r'<ul>[\s\S]*?</ul>', html)[0]
         except IndexError as _:
-            raise RegexMatchError('Relative info not found in html with regex')
-#         old_form = None
+            raise RegexMatchError('❌❌❌ Relative info not found in html with regex ❌❌❌')
         with open("form.txt", "r", encoding="utf-8") as f:
-#             old_form = f.read()
             if new_form.strip() == f.read().strip():
                 return True
-        # with open("form.txt", "w", encoding="utf-8") as f:
-        #    f.write(new_form)
-#         print(new_form)
-#         print('='*100)
-#         print(old_form)
         return False
 
     def get_info(self, html=None):
@@ -119,19 +110,16 @@ class HitCarder(object):
             if len(old_infos) != 0:
                 old_info = json.loads(old_infos[0])
             else:
-                raise RegexMatchError("未发现缓存信息，请先至少手动成功打卡一次再运行脚本")
+                raise RegexMatchError("❌❌❌ 未发现缓存信息，请先至少手动成功打卡一次再运行脚本 ❌❌❌")
             new_info_tmp = json.loads(re.findall(r'def = ({[^\n]+})', html)[0])
             new_id = new_info_tmp['id']
             name = re.findall(r'realname: "([^\"]+)",', html)[0]
             number = re.findall(r"number: '([^\']+)',", html)[0]
         except IndexError as err:
             raise RegexMatchError(
-                'Relative info not found in html with regex: ' + str(err))
+                '❌❌❌ Relative info not found in html with regex: ' + str(err) + ' ❌❌❌')
         except json.decoder.JSONDecodeError as err:
-            raise DecodeError('JSON decode error: ' + str(err))
-            
-        
-        
+            raise DecodeError('❌❌❌ JSON decode error: ' + str(err) + ' ❌❌❌')
         
         
         new_info = old_info.copy()
@@ -198,47 +186,43 @@ def main(username, password):
     """
 
     hit_carder = HitCarder(username, password)
-    print("[Time] %s" % datetime.datetime.now().strftime(
+    print("🚌🚌🚌 [Time] %s 🚌🚌🚌" % datetime.datetime.now().strftime(
         '%Y-%m-%d %H:%M:%S'))
-    print(datetime.datetime.utcnow() + datetime.timedelta(hours=+8))
-    print("打卡任务启动")
+    print('🚌🚌🚌 ' + datetime.datetime.utcnow() + datetime.timedelta(hours=+8) + ' 🚌🚌🚌')
+    print("🚌🚌🚌 打卡任务启动 🚌🚌🚌")
 
     try:
         hit_carder.login()
-        print('已登录到浙大统一身份认证平台')
+        print('🚌🚌🚌 已登录到浙大统一身份认证平台 🚌🚌🚌')
     except Exception as err:
-        return 1, '打卡登录失败：' + str(err)
+        return 1, '❌❌❌ 打卡登录失败：' + str(err) + ' ❌❌❌'
 
     try:
         ret = hit_carder.check_form()
         if not ret:
-            return 2, '打卡信息已改变，请手动打卡'
+            return 2, '❌❌❌ 打卡信息已改变，请手动打卡' + ' ❌❌❌'
     except Exception as err:
-        return 1, '获取信息失败，请手动打卡: ' + str(err)
+        return 1, '❌❌❌ 获取信息失败，请手动打卡: ' + str(err) + ' ❌❌❌'
 
     try:
         hit_carder.get_info()
     except Exception as err:
-        return 1, '获取信息失败，请手动打卡: ' + str(err)
+        return 1, '❌❌❌ 获取信息失败，请手动打卡: ' + str(err) + ' ❌❌❌'
 
     try:
         res = hit_carder.post()
-        print(res)
+        # print(res)
         if str(res['e']) == '0':
-            return 0, '打卡成功'
+            return 0, '🚌🚌🚌 打卡任务成功 🚌🚌🚌'
         elif str(res['m']) == '今天已经填报了':
-            return 0, '今天已经打卡'
+            return 0, '🚌🚌🚌 今天已经打卡 🚌🚌🚌'
         else:
-            return 1, '打卡失败'
+            return 1, '❌❌❌ 打卡失败 ❌❌❌'
     except:
-        return 1, '打卡数据提交失败'
+        return 1, '❌❌❌ 打卡数据提交失败 ❌❌❌'
 
 
 if __name__ == "__main__":
-    print("\n[Time] %s" %
-          datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    print("🚌 打卡任务启动")
-    
     
     username = os.environ['USERNAME']
     password = os.environ['PASSWORD']
@@ -247,18 +231,18 @@ if __name__ == "__main__":
     print(ret, msg)
     if ret == 1:
         time.sleep(5)
-        ret, msg = main(username, password)
-        print(ret, msg)
+        _, msg = main(username, password)
+        print(msg)
 
     dingtalk_token = os.environ.get('DINGTALK_TOKEN')
     if dingtalk_token:
         ret = message.dingtalk(msg, dingtalk_token)
-        print('send_dingtalk_message', ret)
+        print('🚌🚌🚌 send_dingtalk_message 🚌🚌🚌', ret)
 
     serverchan_key = os.environ.get('SERVERCHAN_KEY')
     if serverchan_key:
         ret = message.serverchan(msg, '', serverchan_key)
-        print('send_serverChan_message', ret)
+        print('🚌🚌🚌 send_serverChan_message 🚌🚌🚌', ret)
 
     pushplus_token = os.environ.get('PUSHPLUS_TOKEN')
     if pushplus_token:
