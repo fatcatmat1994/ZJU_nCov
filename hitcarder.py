@@ -237,12 +237,12 @@ if __name__ == "__main__":
     dingtalk_token = os.environ.get('DINGTALK_TOKEN')
     if dingtalk_token:
         ret = message.dingtalk(msg, dingtalk_token)
-        print('🚌🚌🚌 send_dingtalk_message 🚌🚌🚌', ret)
+        print('🚌🚌🚌 send_dingtalk_message %s 🚌🚌🚌'%ret)
 
     serverchan_key = os.environ.get('SERVERCHAN_KEY')
     if serverchan_key:
         ret = message.serverchan(msg, '', serverchan_key)
-        print('🚌🚌🚌 send_serverChan_message 🚌🚌🚌', ret)
+        print('🚌🚌🚌 send_serverChan_message  %s 🚌🚌🚌'%ret)
 
     pushplus_token = os.environ.get('PUSHPLUS_TOKEN')
     if pushplus_token:
