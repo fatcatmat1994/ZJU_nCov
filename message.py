@@ -21,12 +21,11 @@ def dingtalk(msg, dingtalk_token, tries=5):
         try:
             r = requests.post(dingtalk_url,
                               data=json.dumps(data), headers=header).json()
-            print(r)
             if r["errcode"] == 0:
                 return True
         except:
             pass
-        print('Retrying...')
+        print('❗❗❗ Retrying... ❗❗❗')
         time.sleep(5)
     return False
 
