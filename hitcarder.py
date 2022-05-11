@@ -188,7 +188,7 @@ def main(username, password):
     hit_carder = HitCarder(username, password)
     print("🚌🚌🚌 [Time] %s 🚌🚌🚌" % datetime.datetime.now().strftime(
         '%Y-%m-%d %H:%M:%S'))
-    print('🚌🚌🚌 ' + datetime.datetime.utcnow() + datetime.timedelta(hours=+8) + ' 🚌🚌🚌')
+    print('🚌🚌🚌 ', datetime.datetime.utcnow() + datetime.timedelta(hours=+8), ' 🚌🚌🚌')
     print("🚌🚌🚌 打卡任务启动 🚌🚌🚌")
 
     try:
