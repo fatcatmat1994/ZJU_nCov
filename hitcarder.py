@@ -227,12 +227,17 @@ if __name__ == "__main__":
     username = os.environ['USERNAME']
     password = os.environ['PASSWORD']
     
+    ret = None
+    msg = None
     ret, msg = main(username, password)
     print(ret, msg)
     if ret == 1:
-        time.sleep(5)
-        cd, msg = main(username, password)
-        print(msg)
+        cnt = 0
+        while(cnt < 5):
+            time.sleep(10)
+            cd, msg = main(username, password)
+            print(msg)
+            cnt += 1
 
     dingtalk_token = os.environ.get('DINGTALK_TOKEN')
     if dingtalk_token:
