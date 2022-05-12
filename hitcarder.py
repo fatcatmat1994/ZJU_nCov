@@ -177,7 +177,7 @@ class DecodeError(Exception):
     pass
 
 
-def main(username, password):
+def main(strname, username, password):
     """Hit card process
 
     Arguments:
@@ -193,49 +193,49 @@ def main(username, password):
 
     try:
         hit_carder.login()
-        print('🚌🚌🚌 %s 已登录到浙大统一身份认证平台 🚌🚌🚌'%username)
+        print('🚌🚌🚌 %s 已登录到浙大统一身份认证平台 🚌🚌🚌'%strname)
     except Exception as err:
-        return 1, '❌❌❌ %s 打卡登录失败：'%username + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 打卡登录失败：'%strname + str(err) + ' ❌❌❌'
 
     try:
         ret = hit_carder.check_form()
         if not ret:
-            return 2, '❌❌❌ %s 打卡信息已改变，请手动打卡'%username + ' ❌❌❌'
+            return 2, '❌❌❌ %s 打卡信息已改变，请手动打卡'%strname + ' ❌❌❌'
     except Exception as err:
-        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%username + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%strname + str(err) + ' ❌❌❌'
 
     try:
         hit_carder.get_info()
     except Exception as err:
-        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%username + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%strname + str(err) + ' ❌❌❌'
 
     try:
         res = hit_carder.post()
         print(res)
         if str(res['e']) == '0':
-            return 0, '🚌🚌🚌 %s 打卡任务成功 🚌🚌🚌' %username
+            return 0, '🚌🚌🚌 %s 打卡任务成功 🚌🚌🚌' %strname
         elif str(res['m']) == '今天已经填报了':
-            return 0, '🚌🚌🚌 %s 今天已经打卡 🚌🚌🚌'%username
+            return 0, '🚌🚌🚌 %s 今天已经打卡 🚌🚌🚌'%strname
         else:
-            return 1, '❌❌❌ %s 打卡失败 ❌❌❌'%username
+            return 1, '❌❌❌ %s 打卡失败 ❌❌❌'%strname
     except:
-        return 1, '❌❌❌ %s 打卡数据提交失败 ❌❌❌'%username
+        return 1, '❌❌❌ %s 打卡数据提交失败 ❌❌❌'%strname
 
 
 if __name__ == "__main__":
-    
+    strname = os.environ['STRNAME']
     username = os.environ['USERNAME']
     password = os.environ['PASSWORD']
     
     ret = None
     msg = None
-    ret, msg = main(username, password)
+    ret, msg = main(strname, username, password)
     print(ret, msg)
     if ret == 1:
         cnt = 0
         while(cnt < 5):
             time.sleep(10)
-            cd, msg = main(username, password)
+            cd, msg = main(strname, username, password)
             print(msg)
             cnt += 1
 
