@@ -7,6 +7,9 @@ branding:
   color: blue
 
 inputs:
+  strname:
+    description: zju account username(student name).
+    required: true
   username:
     description: zju account username(student id).
     required: true
@@ -31,6 +34,7 @@ runs:
   steps:
     - name: Working
       env:
+        STRNAME: ${{ inputs.strname }}
         USERNAME: ${{ inputs.username }}
         PASSWORD: ${{ inputs.password }}
         DINGTALK_TOKEN: ${{ inputs.dingtalk_token }}
