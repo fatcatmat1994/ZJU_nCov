@@ -193,33 +193,33 @@ def main(username, password):
 
     try:
         hit_carder.login()
-        print('🚌🚌🚌 已登录到浙大统一身份认证平台 🚌🚌🚌')
+        print('🚌🚌🚌 %s 已登录到浙大统一身份认证平台 🚌🚌🚌'%username)
     except Exception as err:
-        return 1, '❌❌❌ 打卡登录失败：' + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 打卡登录失败：'%username + str(err) + ' ❌❌❌'
 
     try:
         ret = hit_carder.check_form()
         if not ret:
-            return 2, '❌❌❌ 打卡信息已改变，请手动打卡' + ' ❌❌❌'
+            return 2, '❌❌❌ %s 打卡信息已改变，请手动打卡'%username + ' ❌❌❌'
     except Exception as err:
-        return 1, '❌❌❌ 获取信息失败，请手动打卡: ' + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%username + str(err) + ' ❌❌❌'
 
     try:
         hit_carder.get_info()
     except Exception as err:
-        return 1, '❌❌❌ 获取信息失败，请手动打卡: ' + str(err) + ' ❌❌❌'
+        return 1, '❌❌❌ %s 获取信息失败，请手动打卡: '%username + str(err) + ' ❌❌❌'
 
     try:
         res = hit_carder.post()
-        # print(res)
+        print(res)
         if str(res['e']) == '0':
-            return 0, '🚌🚌🚌 打卡任务成功 🚌🚌🚌'
+            return 0, '🚌🚌🚌 %s 打卡任务成功 🚌🚌🚌' %username
         elif str(res['m']) == '今天已经填报了':
-            return 0, '🚌🚌🚌 今天已经打卡 🚌🚌🚌'
+            return 0, '🚌🚌🚌 %s 今天已经打卡 🚌🚌🚌'%username
         else:
-            return 1, '❌❌❌ 打卡失败 ❌❌❌'
+            return 1, '❌❌❌ %s 打卡失败 ❌❌❌'%username
     except:
-        return 1, '❌❌❌ 打卡数据提交失败 ❌❌❌'
+        return 1, '❌❌❌ %s 打卡数据提交失败 ❌❌❌'%username
 
 
 if __name__ == "__main__":
@@ -231,7 +231,7 @@ if __name__ == "__main__":
     print(ret, msg)
     if ret == 1:
         time.sleep(5)
-        _, msg = main(username, password)
+        cd, msg = main(username, password)
         print(msg)
 
     dingtalk_token = os.environ.get('DINGTALK_TOKEN')
