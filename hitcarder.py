@@ -231,13 +231,12 @@ if __name__ == "__main__":
     msg = None
     ret, msg = main(strname, username, password)
     print(ret, msg)
-    if ret == 1:
-        cnt = 0
-        while(cnt < 5):
-            time.sleep(10)
-            cd, msg = main(strname, username, password)
-            print(msg)
-            cnt += 1
+    cnt = 0
+    while(cnt < 5 && ret == 1):
+        time.sleep(10)
+        ret, msg = main(strname, username, password)
+        print(msg)
+        cnt += 1
 
     dingtalk_token = os.environ.get('DINGTALK_TOKEN')
     if dingtalk_token:
