@@ -232,7 +232,7 @@ if __name__ == "__main__":
     ret, msg = main(strname, username, password)
     print(ret, msg)
     cnt = 0
-    while(cnt < 5 && ret == 1):
+    while cnt < 5 and ret == 1:
         time.sleep(10)
         ret, msg = main(strname, username, password)
         print(msg)
