@@ -9,7 +9,7 @@ import datetime
 import os
 import sys
 import message
-import ddddocr
+# import ddddocr
 
 class HitCarder(object):
     """Hit carder class
@@ -77,12 +77,12 @@ class HitCarder(object):
         today = datetime.datetime.utcnow() + datetime.timedelta(hours=+8)
         return "%4d%02d%02d" % (today.year, today.month, today.day)
     
-    def get_captcha(self):
-        """Get CAPTCHA code"""
-        resp = self.sess.get(self.CAPTCHA_URL)
-        captcha = self.ocr.classification(resp.content)
-        print("🚌🚌🚌 验证码获取成功, 本次验证码为 【%s】 🚌🚌🚌" % captcha)
-        return captcha
+    # def get_captcha(self):
+        # """Get CAPTCHA code"""
+        # resp = self.sess.get(self.CAPTCHA_URL)
+        # captcha = self.ocr.classification(resp.content)
+        # print("🚌🚌🚌 验证码获取成功, 本次验证码为 【%s】 🚌🚌🚌" % captcha)
+        # return captcha
     
     def check_form(self):
         """Get hitcard form, compare with old form """
@@ -135,13 +135,12 @@ class HitCarder(object):
         # form change
         new_info['jrdqtlqk[]'] = 0
         new_info['jrdqjcqk[]'] = 0
-        new_info['sfsqhzjkk'] = 1   # 是否申领杭州健康码
         new_info['sqhzjkkys'] = 1   # 杭州健康吗颜色，1:绿色 2:红色 3:黄色
         new_info['sfqrxxss'] = 1    # 是否确认信息属实
         new_info['jcqzrq'] = ""
         new_info['gwszdd'] = ""
         new_info['szgjcs'] = ""
-        new_info['verifyCode'] = self.get_captcha()
+        # new_info['verifyCode'] = self.get_captcha()
 
         # 2021.08.05 Fix 2
         magics = re.findall(r'"([0-9a-f]{32})":\s*"([^\"]+)"', html)
