@@ -31,7 +31,7 @@ class HitCarder(object):
         self.save_url = "https://healthreport.zju.edu.cn/ncov/wap/default/save"
         self.CAPTCHA_URL = 'https://healthreport.zju.edu.cn/ncov/wap/default/code'
         self.sess = requests.Session()
-        self.ocr = ddddocr.DdddOcr()
+        # self.ocr = ddddocr.DdddOcr()
         self.sess.keep_alive = False
         retry = Retry(connect=3, backoff_factor=0.5)
         adapter = HTTPAdapter(max_retries=retry)
