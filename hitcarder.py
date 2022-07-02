@@ -132,6 +132,7 @@ class HitCarder(object):
         new_info["area"] = old_info['area']
         new_info["province"] = new_info["area"].split(' ')[0]
         new_info["city"] = new_info["area"].split(' ')[1]
+        new_info["internship"] =  new_info["internship"]
         # form change
         new_info['jrdqtlqk[]'] = 0
         new_info['jrdqjcqk[]'] = 0
