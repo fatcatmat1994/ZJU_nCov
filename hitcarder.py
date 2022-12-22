@@ -123,16 +123,19 @@ class HitCarder(object):
         
         
         new_info = old_info.copy()
+        print(new_info)
+        exit(0)
         new_info['id'] = new_id
         new_info['name'] = name
         new_info['number'] = number
         new_info["date"] = self.get_date()
         new_info["created"] = round(time.time())
-        new_info["address"] = old_info['address']
+#         new_info["address"] = old_info['address']
         new_info["area"] = old_info['area']
-        new_info["province"] = new_info["area"].split(' ')[0]
-        new_info["city"] = new_info["area"].split(' ')[1]
-        new_info["internship"] =  new_info["internship"]
+#         new_info["province"] = new_info["area"].split(' ')[0]
+#         new_info["city"] = new_info["area"].split(' ')[1]
+#         new_info["internship"] =  new_info["internship"]
+        new_info["sfzx"] = new_info["sfzx"]
         new_info["campus"] = new_info["campus"]
         
         # form change
