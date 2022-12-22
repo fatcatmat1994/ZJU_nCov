@@ -130,24 +130,11 @@ class HitCarder(object):
         new_info['number'] = number
         new_info["date"] = self.get_date()
         new_info["created"] = round(time.time())
-#         new_info["address"] = old_info['address']
-        new_info["area"] = old_info['area']
-#         new_info["province"] = new_info["area"].split(' ')[0]
-#         new_info["city"] = new_info["area"].split(' ')[1]
-#         new_info["internship"] =  new_info["internship"]
+        
+        new_info['tw'] = new_info['tw']
+        new_info['sqhzjkkys'] = new_info['sqhzjkkys']
         new_info["sfzx"] = new_info["sfzx"]
         new_info["campus"] = new_info["campus"]
-        
-        # form change
-        new_info['ismoved'] = 5
-        new_info['jrdqtlqk[]'] = 0
-        new_info['jrdqjcqk[]'] = 0
-        new_info['sqhzjkkys'] = 1   # 杭州健康吗颜色，1:绿色 2:红色 3:黄色
-        new_info['sfqrxxss'] = 1    # 是否确认信息属实
-        new_info['sfzx'] = 1 # 是否在校
-        new_info['sfzgn'] = 0
-        new_info['szgjcs'] = ""
-        # new_info['verifyCode'] = self.get_captcha()
 
         # 2021.08.05 Fix 2
         magics = re.findall(r'"([0-9a-f]{32})":\s*"([^\"]+)"', html)
