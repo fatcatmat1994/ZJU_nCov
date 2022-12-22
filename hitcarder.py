@@ -123,8 +123,6 @@ class HitCarder(object):
         
         
         new_info = old_info.copy()
-        print(new_info)
-        exit(0)
         new_info['id'] = new_id
         new_info['name'] = name
         new_info['number'] = number
