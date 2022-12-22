@@ -136,7 +136,6 @@ class HitCarder(object):
         new_info["campus"] = new_info["campus"]
         
         # form change
-        new_info['sfymqjczrj'] = 0
         new_info['ismoved'] = 5
         new_info['jrdqtlqk[]'] = 0
         new_info['jrdqjcqk[]'] = 0
